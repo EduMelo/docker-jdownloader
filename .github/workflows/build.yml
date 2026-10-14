@@ -40,7 +40,9 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
-          platforms: linux/amd64,linux/arm64,linux/arm/v7,linux/arm/v6
+          # arm/v6 (Raspbian) roda o Java no postinst de ca-certificates-java.
+          # O QEMU do runner aborta essa JVM e o build inteiro falha.
+          platforms: linux/amd64,linux/arm64,linux/arm/v7
           push: true
           provenance: false
           tags: ${{ steps.docker_image.outputs.tag }}
